@@ -1,0 +1,3 @@
+_post:
+  resource: post.yaml
+  prefix: app
