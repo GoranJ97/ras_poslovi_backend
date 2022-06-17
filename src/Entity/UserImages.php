@@ -25,6 +25,7 @@ class UserImages extends BaseEntity
     protected $url;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="image")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE", nullable=true)
      */
     private $user;
 
