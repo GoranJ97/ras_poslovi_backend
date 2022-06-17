@@ -77,7 +77,7 @@ class UserService
 
     public function update(User $user, Request $request): User
     {
-        $content = json_decode($request->getContent());
+        $content = json_decode($request->request->get('request'));
 
         $user->setEmail($content->email);
         $user->setName($content->name);
@@ -92,17 +92,14 @@ class UserService
     public function delete($id): JsonResponse
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['id' => $id]);
-        if ($user) {
-            if ($user->getDeletedAt()) {
-                $this->entityManager->remove($user);
-            } else {
-                $user->setDeletedAt(new \DateTime());
-                $this->entityManager->persist($user);
+        if (!$user) {
+            return ResponseService::sendItem([], 'User does not exist', 404);
             }
+            $this->entityManager->remove($user);
             $this->entityManager->flush();
             return ResponseService::sendItem([], 'User deleted');
-        }
-        return ResponseService::sendItem([], 'User does not exist', 404);
+
+
     }
 
     public function passwordUpdate(UserPasswordHasherInterface $passwordHasher,
