@@ -8,13 +8,16 @@ trait PostTrait
 {
     protected function getPostData(Post $post)
     {
-
+        $user = $post->getUser();
         return [
             'id' => $post->getId(),
             'title' => $post->getTitle(),
             'content' => $post->getContent(),
-            'user' => $post->getUser()
-
+            'user' => [
+               'id' => $user->getId(),
+               'name' => $user->getName(),
+               'images' => $user->getUserImages()
+            ]
         ];
     }
 

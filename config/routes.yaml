@@ -1,2 +1,6 @@
 _main:
   resource: routes/main/main.yaml
+
+app_login_check:
+  path: /app/login_check
+

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\UserImages;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,46 +22,9 @@ class UserImagesRepository extends ServiceEntityRepository
         parent::__construct($registry, UserImages::class);
     }
 
-    public function add(UserImages $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+    public function removeUserImages($removeUserImages) {
+        $qb = $this->_em->createQuery("DELETE FROM App\Entity\UserImages AS ui WHERE ui.id IN (:removedUserImages)");
+        $qb->setParameter(':removedUserImages', json_decode($removeUserImages), Connection::PARAM_STR_ARRAY);
+        return $qb->execute();
     }
-
-    public function remove(UserImages $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-//    /**
-//     * @return UserImages[] Returns an array of UserImages objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?UserImages
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

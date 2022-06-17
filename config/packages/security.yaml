@@ -1,0 +1,35 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    enable_authenticator_manager: true
+
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    firewalls:
+        login:
+            pattern: ^/app/login
+            stateless: true
+            json_login:
+                check_path: /app/login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        main:
+            pattern: ^/app
+            stateless: true
+            provider: 'app_user_provider'
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
+    access_control:
+#        - { path: '^/app/login_check$', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: '^/app', roles: ROLE_ADMIN }

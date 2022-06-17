@@ -4,42 +4,50 @@ namespace App\Entity;
 
 use App\Repository\UserImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=UserImagesRepository::class)
+ * @Vich\Uploadable()
  */
-class UserImages
+class UserImages extends BaseEntity
 {
+
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @Vich\UploadableField(mapping="user_images", fileNameProperty="url")
      */
-    private $id;
+    private $file;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $name;
-
+    protected $url;
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userImages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="image")
      */
     private $user;
 
-    public function getId(): ?int
+    public function getFile(): ?File
     {
-        return $this->id;
+        return $this->file;
     }
 
-    public function getName(): ?string
+    public function setFile(?File $file): self
     {
-        return $this->name;
+        $this->file = $file;
+
+        return $this;
     }
 
-    public function setName(?string $name): self
+    public function getUrl(): ?string
     {
-        $this->name = $name;
+        return $this->url;
+    }
+
+    public function setUrl(?string $url): self
+    {
+        $this->url = $url;
 
         return $this;
     }

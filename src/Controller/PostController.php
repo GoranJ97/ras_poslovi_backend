@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\User;
 use App\Services\PostService;
 use App\Services\ResponseService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,11 +69,10 @@ class PostController extends AbstractController
 
     /**
      * @param $id
-     * @param Request $request
      * @return JsonResponse
      * @throws \Exception
      */
-    public function show($id, Request $request): JsonResponse
+    public function show($id): JsonResponse
     {
         $postService = new PostService($this->entityManager);
         $post = $postService->show($id);
