@@ -1,0 +1,24 @@
+app_user_show:
+  path: /user
+  methods: ["GET"]
+  defaults: { _controller: App\Controller\UserController::show }
+
+app_user_update:
+  path: /user/{id}
+  methods: ["PUT"]
+  defaults: { _controller: App\Controller\UserController::update }
+
+app_user_delete:
+  path: /user/{id}
+  methods: ["DELETE"]
+  defaults: { _controller: App\Controller\UserController::delete }
+
+app_user_create:
+  path: /user
+  methods: ["POST"]
+  defaults: { _controller: App\Controller\UserController::create }
+
+app_user_password_update:
+  path: /user
+  methods: ["PUT"]
+  defaults: { _controller: App\Controller\UserController::passwordUpdate }
