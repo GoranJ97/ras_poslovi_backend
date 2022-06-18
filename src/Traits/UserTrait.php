@@ -24,6 +24,7 @@ trait UserTrait
         return [
             'id' => $user->getId(),
             'email' => $user->getEmail(),
+            'description'=> $user->getDescription(),
             'images' => $userImages
         ];
     }
