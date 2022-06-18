@@ -46,6 +46,11 @@ class User extends BaseEntity implements UserInterface , PasswordAuthenticatedUs
      */
     private $roles;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
     public function __construct()
     {
         $this->userImages = new ArrayCollection();
@@ -182,5 +187,17 @@ class User extends BaseEntity implements UserInterface , PasswordAuthenticatedUs
     public function getUsername()
     {
         // TODO: Implement getUsername() method.
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

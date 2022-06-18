@@ -67,6 +67,7 @@ class UserService
         $user->setEmail($content->email);
         $user->setName($content->name);
         $user->setRoles($content->roles);
+        $user->setDescription($content->description);
         $passwordHashed = $passwordHasher->hashPassword($user, $content->password);
         $user->setPassword($passwordHashed);
 
@@ -82,6 +83,7 @@ class UserService
         $user->setEmail($content->email);
         $user->setName($content->name);
         $user->setRoles($content->roles);
+        $user->setDescription($content->description);
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
